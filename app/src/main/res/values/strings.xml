@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">School Management System</string>
+    <string name="profil">Profil</string>
+    <string name="jadwal">Jadwal</string>
+    <string name="kehadiran">Kehadiran</string>
+    <string name="ajukan_izin">Ajukan Izin</string>
+    <string name="pembayaran">Pembayaran</string>
+    <string name="nis">NIS</string>
+    <string name="titik_dua_spasi">\ :\ </string>
+    <string name="nisn">NISN</string>
+    <string name="status_pelajar">Status Pelajar</string>
+    <string name="sekolah_asal">Sekolah Asal</string>
+    <string name="nama_ayah">Nama Ayah</string>
+    <string name="nama_ibu">Nama Ibu</string>
+    <string name="status_keluarga">Status Keluarga</string>
+    <string name="anak_ke">Anak Ke</string>
+    <string name="alamat">Alamat</string>
+    <string name="student_image">Student Image</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="tempat_tanggal_lahir">Tempat, Tanggal Lahir</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="title_activity_schedule">Jadwal Pelajaran</string>
+    <string name="title_activity_profile">Profil Siswa</string>
+    <string name="title_activity_kehadiran">Kehadiran</string>
+    <string name="title_activity_izin">Perizinan</string>
+    <string name="title_activity_pembayaran">Pembayaran</string>
+    <string name="agama">Agama</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="jenis_perizinan">Jenis Perizinan</string>
+    <string name="sakit">Sakit</string>
+    <string name="izin">Izin</string>
+    <string name="bukti_izin">Bukti Izin</string>
+    <string name="pilih_file">Pilih File</string>
+</resources>
