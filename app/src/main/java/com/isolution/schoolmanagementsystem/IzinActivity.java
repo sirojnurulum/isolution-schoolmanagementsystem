@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.isolution.schoolmanagementsystem.utilities.NetworkUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import dmax.dialog.SpotsDialog;
@@ -133,9 +135,14 @@ public class IzinActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (data != null) {
             if (requestCode == 0 && resultCode == RESULT_OK) {
-                kirimPerizinan(data.getData());
+                try {
+                    kirimPerizinan(MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData()));
+                } catch (IOException e) {
+                    Log.e("-->", e.toString());
+                    Toast.makeText(IzinActivity.this, "gambar kosong", Toast.LENGTH_LONG).show();
+                }
             } else if (requestCode == 1 && resultCode == RESULT_OK) {
-                kirimPerizinan(data.getData());
+                kirimPerizinan((Bitmap) data.getExtras().get("data"));
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(IzinActivity.this, "Gambar Gagal Dipilih", Toast.LENGTH_LONG).show();
             }
@@ -165,16 +172,14 @@ public class IzinActivity extends AppCompatActivity {
         rbIzin.setChecked(false);
     }
 
-    private void kirimPerizinan(Uri uri) {
+    private void kirimPerizinan(Bitmap bitmap) {
         String jenisIzin = null;
         if (rbIzin.isChecked()) {
             jenisIzin = "3";
         } else if (rbSakit.isChecked()) {
             jenisIzin = "4";
         }
-        Bitmap b = BitmapFactory.decodeFile(uri.getPath());
-        ivProfile.setImageBitmap(b);
-        new IzinActivity.UploadIzin().execute(new Perizinan(profil, b, jenisIzin));
+        new IzinActivity.UploadIzin().execute(new Perizinan(profil, bitmap, jenisIzin));
         initView();
     }
 
@@ -197,7 +202,7 @@ public class IzinActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             loading.dismiss();
-            Toast.makeText(IzinActivity.this, s, Toast.LENGTH_LONG).show();
+            Toast.makeText(IzinActivity.this, "pesan : " + s, Toast.LENGTH_LONG).show();
         }
     }
 

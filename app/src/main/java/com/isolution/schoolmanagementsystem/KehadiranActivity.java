@@ -44,7 +44,7 @@ public class KehadiranActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            return NetworkUtils.getDataKehadiran(strings[0]);
+            return NetworkUtils.getKehadiranData(strings[0]);
         }
 
         @Override

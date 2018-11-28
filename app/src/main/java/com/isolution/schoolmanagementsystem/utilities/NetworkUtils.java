@@ -43,6 +43,16 @@ public class NetworkUtils {
         return sb.toString();
     }
 
+    public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        return bos.toByteArray();
+    }
+
+    public static Bitmap convertByteArrayToBitmap(byte[] bitmap) {
+        return BitmapFactory.decodeByteArray(bitmap, 0, bitmap.length);
+    }
+
     public static String getProfileData(String nis) {
         String URL_GET_PROFILE = BASE_URL_DEMO + "pelajar/api_profile_siswa/";
         String reqUrl = URL_GET_PROFILE + nis;
@@ -67,7 +77,7 @@ public class NetworkUtils {
         return response;
     }
 
-    public static String getDataJadwal(String nis) {
+    public static String getJadwalData(String nis) {
         String URL_GET_JADWAL = BASE_URL_DEMO + "jadwal/api_lihat_jadwal_siswa/";
         String reqUrl = URL_GET_JADWAL + nis;
         String response = null;
@@ -90,7 +100,7 @@ public class NetworkUtils {
         return response;
     }
 
-    public static String getDataKehadiran(String nis) {
+    public static String getKehadiranData(String nis) {
         String URL_GET_KEHADIRAN = BASE_URL_DEMO + "kehadiran/api_kehadiran_siswa_hari_ini/";
         String reqUrl = URL_GET_KEHADIRAN + nis;
         String response = null;
@@ -131,13 +141,6 @@ public class NetworkUtils {
         return response;
     }
 
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
 
     public static String uploadPerizinan(Perizinan perizinanData) {
         String URL_POST_PERIZINAN = BASE_URL_DEMO + "kehadiran/api_pengajuan_absen";
@@ -150,52 +153,46 @@ public class NetworkUtils {
                 .toString();
         try {
             con = (HttpURLConnection) new URL(URL_POST_PERIZINAN).openConnection();
-            con.setRequestMethod("POST");
-            con.setDoInput(true);
+            con.setUseCaches(false);
             con.setDoOutput(true);
+            con.setRequestMethod("POST");
             con.setRequestProperty("Connection", "Keep-Alive");
-            con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            con.setRequestProperty("Cache-Control", "no-cache");
+
             DataOutputStream dos = new DataOutputStream(con.getOutputStream());
             //
             dos.writeBytes(stripDua + boundary + crlf);
             dos.writeBytes("Content-Disposition: form-data; name=\"user_image\";" +
                     "filename=\"" + fileName + "\"" + crlf);
-
-            Log.e("--> dos3 : ", dos.toString());
-            try {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                Bitmap b = perizinanData.getBuktiIzin();
-                Log.e("--> bitmap", String.valueOf(perizinanData.getBuktiIzin().getHeight()));
-                b.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                dos.write(baos.toByteArray());
-                b.recycle();
-            } catch (IOException e) {
-                Log.e("--> baos : ", e.toString());
-            }
-            Log.e("--> dos4 : ", dos.toString());
+            dos.writeBytes(crlf);
+            dos.write(convertBitmapToByteArray(perizinanData.getBuktiIzin()));
             //
+            dos.writeBytes(crlf);
             dos.writeBytes(stripDua + boundary + crlf);
             dos.writeBytes("Content-Disposition: form-data; name=\"nis\"" + crlf);
             dos.writeBytes("Content-Type: text/plain; charset=UTF-8" + crlf);
             dos.writeBytes(crlf);
             dos.writeBytes(perizinanData.getProfil().getNis() + crlf);
-            Log.e("--> dos5 : ", dos.toString());
             //
+            dos.writeBytes(crlf);
             dos.writeBytes(stripDua + boundary + crlf);
             dos.writeBytes("Content-Disposition: form-data; name=\"absen\"" + crlf);
             dos.writeBytes("Content-Type: text/plain; charset=UTF-8" + crlf);
             dos.writeBytes(crlf);
             dos.writeBytes(perizinanData.getJenisIzin() + crlf);
-            Log.e("--> dos6 : ", dos.toString());
             //
             dos.writeBytes(crlf);
             dos.writeBytes(stripDua + boundary + stripDua + crlf);
             dos.flush();
             dos.close();
-            Log.e("--> dos7 : ", dos.toString());
+            Log.e("--> cek cek : ", "sampai");
+
             //
             InputStream in = new BufferedInputStream(con.getInputStream());
+            Log.e("--> in1 : ", in.toString());
             response = convertStreamToString(in);
+            Log.e("--> in2 : ", response);
             con.disconnect();
             in.close();
         } catch (IOException e) {
