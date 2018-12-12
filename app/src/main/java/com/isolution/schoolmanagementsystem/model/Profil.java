@@ -67,7 +67,7 @@ public class Profil {
             JSONObject gambar = jsonObject.getJSONObject("gambar");
             this.urlPhoto = gambar.getString("photo");
         } catch (JSONException e) {
-            Log.e("-->JSONException", e.toString());
+            Log.e("-->JSONException", "Profil.Profil() = " + e.toString());
         }
     }
 

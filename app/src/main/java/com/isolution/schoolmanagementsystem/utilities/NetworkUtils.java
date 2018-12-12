@@ -2,7 +2,6 @@ package com.isolution.schoolmanagementsystem.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 
 import com.isolution.schoolmanagementsystem.model.Perizinan;
@@ -19,8 +18,8 @@ import java.net.URL;
 import java.util.Calendar;
 
 public class NetworkUtils {
-    private static String BASE_URL_DEMO = "https://demo.simak.id/";
-    private static String BASE_URL_DEV = "https://dev.isolution.id/";
+    private static String BASE_URL = "https://demo.simak.id/";
+//    private static String BASE_URL = "https://dev.isolution.id/";
 
     private static String convertStreamToString(InputStream in) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -32,18 +31,20 @@ public class NetworkUtils {
                 sb.append(line).append('\n');
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("--> try IOException: ", "NetworkUtils.convertStreamToString() = " + e.toString
+                    ());
         } finally {
             try {
                 in.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("--> finally IOExcept : ", "NetworkUtils.convertStreamToString() = " + e
+                        .toString());
             }
         }
         return sb.toString();
     }
 
-    public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
+    private static byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         return bos.toByteArray();
@@ -54,7 +55,7 @@ public class NetworkUtils {
     }
 
     public static String getProfileData(String nis) {
-        String URL_GET_PROFILE = BASE_URL_DEMO + "pelajar/api_profile_siswa/";
+        String URL_GET_PROFILE = BASE_URL + "pelajar/api_profile_siswa/";
         String reqUrl = URL_GET_PROFILE + nis;
         String response = null;
         HttpURLConnection con = null;
@@ -68,7 +69,7 @@ public class NetworkUtils {
             con.disconnect();
             in.close();
         } catch (IOException e) {
-            Log.e("--> getProfilData : ", e.toString());
+            Log.e("--> try IOException : ", "NetworkUtils.getProfileData() = " + e.toString());
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -78,7 +79,7 @@ public class NetworkUtils {
     }
 
     public static String getJadwalData(String nis) {
-        String URL_GET_JADWAL = BASE_URL_DEMO + "jadwal/api_lihat_jadwal_siswa/";
+        String URL_GET_JADWAL = BASE_URL + "jadwal/api_lihat_jadwal_siswa/";
         String reqUrl = URL_GET_JADWAL + nis;
         String response = null;
         HttpURLConnection con = null;
@@ -91,7 +92,7 @@ public class NetworkUtils {
             con.disconnect();
             in.close();
         } catch (IOException e) {
-            Log.e("--> getJadwalData : ", e.toString());
+            Log.e("--> try IOException : ", "NetworkUtils.getJadwalData() = " + e.toString());
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -101,7 +102,7 @@ public class NetworkUtils {
     }
 
     public static String getKehadiranData(String nis) {
-        String URL_GET_KEHADIRAN = BASE_URL_DEMO + "kehadiran/api_kehadiran_siswa_hari_ini/";
+        String URL_GET_KEHADIRAN = BASE_URL + "kehadiran/api_kehadiran_siswa_hari_ini/";
         String reqUrl = URL_GET_KEHADIRAN + nis;
         String response = null;
         HttpURLConnection con = null;
@@ -114,7 +115,7 @@ public class NetworkUtils {
             con.disconnect();
             in.close();
         } catch (IOException e) {
-            Log.e("--> getDataKehadiran : ", e.toString());
+            Log.e("--> try IOException : ", "NetworkUtils.getKehadiranData() = " + e.toString());
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -132,7 +133,7 @@ public class NetworkUtils {
             InputStream in = con.getInputStream();
             response = BitmapFactory.decodeStream(in);
         } catch (IOException e) {
-            Log.e("--> downloadImage : ", e.toString());
+            Log.e("--> try IOException : ", "NetworkUtils.getImage() = " + e.toString());
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -143,7 +144,7 @@ public class NetworkUtils {
 
 
     public static String uploadPerizinan(Perizinan perizinanData) {
-        String URL_POST_PERIZINAN = BASE_URL_DEMO + "kehadiran/api_pengajuan_absen";
+        String URL_POST_PERIZINAN = BASE_URL + "kehadiran/api_pengajuan_absen";
         String response = null;
         String boundary = "*****";
         String crlf = "\r\n";
@@ -157,8 +158,8 @@ public class NetworkUtils {
             con.setDoOutput(true);
             con.setRequestMethod("POST");
             con.setRequestProperty("Connection", "Keep-Alive");
-            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             con.setRequestProperty("Cache-Control", "no-cache");
+            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
             DataOutputStream dos = new DataOutputStream(con.getOutputStream());
             //
@@ -196,7 +197,7 @@ public class NetworkUtils {
             con.disconnect();
             in.close();
         } catch (IOException e) {
-            Log.e("--> uploadPerizinan : ", e.toString());
+            Log.e("--> try IOException : ", "NetworkUtils.uploadPerizinan() = " + e.toString());
         } finally {
             if (con != null) {
                 con.disconnect();

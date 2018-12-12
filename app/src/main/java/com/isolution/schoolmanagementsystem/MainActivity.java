@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
         pref = getApplicationContext().getSharedPreferences("isolution", 0);
         if (!pref.contains("nis")) {
-            pref.edit().putString("nis", "999001").apply();
+            pref.edit().putString("nis", "999002").apply();
+        } else {
+            pref.edit().putString("nis", "999002").apply();
         }
 
         btnJadwal = findViewById(R.id.btn_jadwal);

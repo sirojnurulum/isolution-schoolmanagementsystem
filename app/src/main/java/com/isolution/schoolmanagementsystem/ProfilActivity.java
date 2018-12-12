@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,7 +106,7 @@ public class ProfilActivity extends AppCompatActivity {
                 try {
                     setView(new Profil(new JSONObject(s)));
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e("--> Profil : ", "FetchProfileData.onPostExecute() = " + e.toString());
                 }
             }
         }

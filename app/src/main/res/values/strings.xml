@@ -43,4 +43,11 @@
     <string name="izin">Izin</string>
     <string name="bukti_izin">Bukti Izin</string>
     <string name="pilih_file">Pilih File</string>
+    <string name="hari">Hari</string>
+    <string name="nama_pelajaran">Nama Pelajaran</string>
+    <string name="strip_dua">--</string>
+    <string name="jam_mulai">Jam Mulai</string>
+    <string name="jam_selesai">Jam Selesai</string>
+    <string name="status_kehadiran">Status Kehadiran</string>
+    <string name="tidak_ada_jadwal">Tidak Ada Jadwal</string>
 </resources>

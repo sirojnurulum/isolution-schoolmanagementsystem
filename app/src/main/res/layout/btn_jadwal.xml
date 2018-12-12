@@ -9,6 +9,7 @@
         android:layout_width="@dimen/homeIconSize"
         android:layout_height="@dimen/homeIconSize"
         android:layout_gravity="center"
+        android:contentDescription="TODO"
         android:padding="@dimen/homeIconPadding"
         app:srcCompat="@drawable/ic_calendar" />
 
